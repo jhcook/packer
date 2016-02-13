@@ -22,7 +22,7 @@ Keyboard is set to 'GB' and language en_GB.UTF-8.
 
 Timezone is set to Europe/London.
 
-Console
+## Console
 ```
 $ vagrant ssh
 [vagrant@centos7-vbox ~]$ df -h
