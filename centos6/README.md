@@ -38,6 +38,7 @@ Filename                Type        Size    Used    Priority
 
 And you can see the vbox kernel modules:
 
+```
 [vagrant@centos6-vbox ~]$ lsmod | grep vbox
 vboxsf                 37731  1
 vboxguest             284775  2 vboxsf
