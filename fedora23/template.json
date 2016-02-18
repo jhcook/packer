@@ -30,7 +30,8 @@
       "artifact": "jhcook/fedora23",
       "artifact_type": "vagrant.box",
       "metadata": {
-        "provider": "virtualbox"
+        "provider": "virtualbox",
+        "version": "{{user `_version_`}}"
       }
     }
   ],
