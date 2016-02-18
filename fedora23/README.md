@@ -22,7 +22,32 @@ Keyboard is set to 'GB' and language en_GB.UTF-8.
 
 Timezone is set to Europe/London.
 
-## Console
+Please note, this build by default will upload the artifact to Atlas. You will
+need to change the destination as well as provide the relevant keys. Or, you
+may use the appropriate command-line switches are remove the post processor
+all together.
+
+## Build
+
+In order to build the artifact, or box, you would run the following command:
+
+```
+$ packer build -var "_version_=`date +%Y.%m.%d.%H%M`" template.json
 ```
 
+This will produce the following output:
+
+```
+...
+==> virtualbox-iso (vagrant): Creating Vagrant box for 'virtualbox' provider
+    virtualbox-iso (vagrant): Copying from artifact: output-virtualbox-iso/packer-virtualbox-iso-1455801637-disk1.vmdk
+    virtualbox-iso (vagrant): Copying from artifact: output-virtualbox-iso/packer-virtualbox-iso-1455801637.ovf
+    virtualbox-iso (vagrant): Renaming the OVF to box.ovf...
+    virtualbox-iso (vagrant): Compressing: Vagrantfile
+    virtualbox-iso (vagrant): Compressing: box.ovf
+    virtualbox-iso (vagrant): Compressing: metadata.json
+    virtualbox-iso (vagrant): Compressing: packer-virtualbox-iso-1455801637-disk1.vmdk
+==> virtualbox-iso: Running post-processor: atlas
+    virtualbox-iso (atlas): Uploading artifact version...
+Build 'virtualbox-iso' finished.
 ```
