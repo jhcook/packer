@@ -31,7 +31,8 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "version": "{{user `_version_`}}"
+        "version": "{{user `_version_`}}",
+        "description": "Daily build of Fedora 23 Workstation"
       }
     }
   ],
