@@ -54,5 +54,5 @@ check_cache ${KRNS[0]}
 if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
-  packer build template.json
+  packer build -var "_version_=`date +%Y.%m.%d.%H%M`" template.json
 fi
