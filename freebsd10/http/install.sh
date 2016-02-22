@@ -1,5 +1,5 @@
 PARTITIONS=ada0
-DISTRIBUTIONS="base.txz kernel.txz lib32.txz"
+DISTRIBUTIONS="base.txz kernel.txz src.txz"
 BSDINSTALL_DISTDIR="/tmp/freebsd-dist"
 
 mkdir $BSDINSTALL_DISTDIR
@@ -14,6 +14,7 @@ done
 
 #!/bin/sh
 echo 'WITHOUT_X11="YES"' >> /etc/make.conf
+echo 'OPTIONS_UNSET=X11' >> /etc/make.conf
 echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
 cat >> /etc/rc.conf <<EOF
 ifconfig_em0="DHCP"
@@ -23,6 +24,7 @@ EOF
 
 env ASSUME_ALWAYS_YES=1 pkg bootstrap
 pkg update
+pkg install -y portmaster
 pkg install -y sudo
 pkg install -y bash
 pkg install -y curl
@@ -34,5 +36,8 @@ echo -n 'vagrant' | pw usermod root -h 0
 pw groupadd -n vagrant -g 1000
 echo -n 'vagrant' | pw useradd -n vagrant -u 1000 -s /usr/local/bin/bash -m -d /home/vagrant/ -G vagrant -h 0
 echo 'vagrant ALL=(ALL) NOPASSWD:ALL' >> /usr/local/etc/sudoers
+
+env PAGER=cat freebsd-update --not-running-from-cron fetch
+freebsd-update install
 
 reboot

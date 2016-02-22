@@ -7,6 +7,8 @@ rm -rf /var/db/freebsd-update/files
 mkdir /var/db/freebsd-update/files
 rm -f /var/db/freebsd-update/*-rollback
 rm -rf /var/db/freebsd-update/install.*
+rm -fr /var/db/portsnap/files
+rm -fr /var/db/portsnap/INDEX
 rm -rf /boot/kernel.old
 rm -rf /usr/src/*
 rm -fr /usr/ports/*
