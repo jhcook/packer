@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+
+# This script simply watches for an updated kernel. If an update is found, it
+# will then kick off a packer build of the related operating system.
+#
+# Requires: GNU Sed
+#
+# Tested on: Mac OS X ElCapitan
+#
+# Author: Justin Cook 
+
+set -x
+set -o errexit
+set -o nounset
+
+MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/23/x86_64/k/"
+PLAT="fedora23"
+TFIL="/tmp/`basename $0`.$$"
+CACH=~/Library/Caches/`basename $0`
+
+function cleanup {
+  rm -f $TFIL
+}
+
+trap cleanup INT TERM EXIT
+
+declare BILD=false
+
+# Only build if the last known exists and does not match the current latest.
+function check_cache {
+  if [ ! -d $CACH ]
+  then
+    mkdir $CACH
+    printf $1 > ${CACH}/last  
+  fi
+  if [ -s ${CACH}/last ]
+  then
+    if [ "`cat ${CACH}/last`" != "$1" ]
+    then
+      BILD=true
+      printf $1 > ${CACH}/last
+    fi
+  else
+    printf $1 > ${CACH}/last
+  fi
+}
+
+curl $MROR -o $TFIL
+KRNS=(`cat $TFIL | gsed -nr 's|.*(kernel-[-.0-9]+\.fc23\.x86_64\.rpm).*|\1|pg' \
+      | sort -rnt. -k2,3`)
+
+check_cache ${KRNS[0]}
+
+if [ "$BILD" = true ]
+then
+  cd ~/repo/packer/${PLAT}
+  packer build template.json
+fi
