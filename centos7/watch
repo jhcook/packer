@@ -54,5 +54,6 @@ check_cache ${KRNS[0]}
 if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
-  packer build template.json
+  VER="`printf ${KRNS[0]} | gsed -r 's|kernel-(.*)\.el7.*|\1|g' | tr '-' '.'`"
+  packer build -var "_version_=$VER" template.json
 fi
