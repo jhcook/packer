@@ -24,6 +24,16 @@
           "output": "centos6-virtualbox.box"
         }
       }
+    },
+    {
+      "type": "atlas",
+      "artifact": "jhcook/centos6",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+        "provider": "virtualbox",
+        "version": "{{user `_version_`}}",
+        "description": "Latest kernel build of CentOS 6"
+      }
     }
   ],
   "builders": [
