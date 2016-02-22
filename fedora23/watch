@@ -31,17 +31,17 @@ function check_cache {
   if [ ! -d $CACH ]
   then
     mkdir $CACH
-    printf $1 > ${CACH}/last  
+    printf $1 > ${CACH}/${PLAT}
   fi
-  if [ -s ${CACH}/last ]
+  if [ -s ${CACH}/${PLAT} ]
   then
-    if [ "`cat ${CACH}/last`" != "$1" ]
+    if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
     then
       BILD=true
-      printf $1 > ${CACH}/last
+      printf $1 > ${CACH}/${PLAT}
     fi
   else
-    printf $1 > ${CACH}/last
+    printf $1 > ${CACH}/${PLAT}
   fi
 }
 
