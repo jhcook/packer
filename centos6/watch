@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+
+# This script simply watches for an updated kernel. If an update is found, it
+# will then kick off a packer build of the related operating system.
+#
+# Requires: GNU Sed
+#
+# Tested on: Mac OS X ElCapitan
+#
+# Author: Justin Cook 
+
+set -x
+set -o errexit
+set -o nounset
+
+MROR="http://mirror.bytemark.co.uk/centos/6/updates/x86_64/Packages/"
+PLAT="centos6"
+TFIL="/tmp/`basename $0`.$$"
+CACH=~/Library/Caches/`basename $0`
+
+function cleanup {
+  rm -f $TFIL
+}
+
+trap cleanup INT TERM EXIT
+
+declare BILD=false
+
+# Only build if the last known exists and does not match the current latest.
+function check_cache {
+  if [ ! -d $CACH ]
+  then
+    mkdir $CACH
+    printf $1 > ${CACH}/${PLAT}
+  fi
+  if [ -s ${CACH}/${PLAT} ]
+  then
+    if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
+    then
+      BILD=true
+      printf $1 > ${CACH}/${PLAT}
+    fi
+  else
+    printf $1 > ${CACH}/${PLAT}
+  fi
+}
+
+curl $MROR -o $TFIL
+KRNS=(`cat $TFIL | gsed -nr 's|.*(kernel-[-.0-9]+\.el6\.x86_64\.rpm).*|\1|pg' \
+      | sort -rnt. -k4,5`)
+
+check_cache ${KRNS[0]}
+
+if [ "$BILD" = true ]
+then
+  cd ~/repo/packer/${PLAT}
+  packer build template.json
+fi
