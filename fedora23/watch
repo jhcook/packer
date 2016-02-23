@@ -55,4 +55,11 @@ if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
   packer build -var "_version_=`date +%Y.%m.%d.%H%M`" template.json
+  if [ $? -eq 0 ]
+  then
+    read -d '' MESS  <<- _EOF_
+    I have released a @fedora 23 @vagrantup box with @virtualbox
+    provider https://atlas.hashicorp.com/jhcook/boxes/fedora23/versions/`date +%Y.%m.%d.%H%M`
+_EOF_
+  fi
 fi
