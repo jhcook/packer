@@ -3,6 +3,19 @@
 These are the packer.io templates and associated code to generate Vagrant
 boxes and other images such as AWS AMI. 
 
+There is a script included in each platform called `watch` which is used to
+simply monitor if a kernel update exists for that platform. In case one does,
+a new `packer build` is initiated.
+
+The Atlas post processor is included in the builds to upload each new build to
+Atlas after a successful build. In order to use this, you will need to obtain
+an Atlas key and populate it in your .bashrc file -- or the relevant one for
+your environment.
+
+After a successful upload, `t` is used to notify the appropriate Twitter
+account of a new upload. In order to install and configure `t`, please see:
+https://github.com/sferik/t
+
 ## CentOS7
 The CentOS7 Vagrant box is a minimal CentOS7 installation with Virtualbox
 Guest Additions 5.0.14 or the latest version of Virtualbox available at the
