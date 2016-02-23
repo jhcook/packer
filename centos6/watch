@@ -56,4 +56,11 @@ then
   cd ~/repo/packer/${PLAT}
   VER="`printf ${KRNS[0]} | gsed -r 's|kernel-(.*)\.el6.*|\1|g' | tr '-' '.'`"
   packer build -var "_version_=$VER" template.json
+  if [ $? -eq 0 ]
+  then
+    MESS="I have released an update to #centos 7 @vagrantup box"
+    MESS="$MESS with @virtualbox provider"
+    MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
+    t update "$MESS $MURL"
+  fi
 fi
