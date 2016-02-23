@@ -3,7 +3,7 @@
 # This script simply watches for an updated kernel. If an update is found, it
 # will then kick off a packer build of the related operating system.
 #
-# Requires: GNU Sed
+# Requires: GNU Sed, Ruby gem t
 #
 # Tested on: Mac OS X ElCapitan
 #
@@ -54,12 +54,13 @@ check_cache ${KRNS[0]}
 if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
-  packer build -var "_version_=`date +%Y.%m.%d.%H%M`" template.json
+  VERS="`date +%Y.%m.%d.%H%M`"
+  packer build -var "_version_=$VERS" template.json
   if [ $? -eq 0 ]
   then
-    read -d '' MESS  <<- _EOF_
-    I have released a @fedora 23 @vagrantup box with @virtualbox
-    provider https://atlas.hashicorp.com/jhcook/boxes/fedora23/versions/`date +%Y.%m.%d.%H%M`
-_EOF_
+    MESS="I have released an update to @fedora 23 workstation @vagrantup box"
+    MESS="$MESS with @virtualbox provider"
+    MURL="https://atlas.hashicorp.com/jhcook/boxes/fedora23/versions/$VERS"
+    t update "$MESS $MURL"
   fi
 fi
