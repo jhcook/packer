@@ -16,37 +16,44 @@ set -o nounset
 # cron does not parse profile and runtime files, so look in personal dir
 source ~/.bashrc
 
+# User editable variables
 MROR="http://mirror.bytemark.co.uk/centos/6/updates/x86_64/Packages/"
 PLAT="centos6"
 TFIL="/tmp/`basename $0`.$$"
 CACH=~/Library/Caches/`basename $0`
 
+# The cleanup function ran at the begining and end of exectution
 function cleanup {
+  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso
+  rm -f ~/repo/packer/${PLAT}/centos6-virtualbox.box
   rm -f $TFIL
 }
 
 trap cleanup INT TERM EXIT
 
+# Builds will be false by default unless it specifically meets requirements
 declare BILD=false
 
 # Only build if the last known exists and does not match the current latest.
 function check_cache {
-  if [ ! -d $CACH ]
-  then
-    mkdir $CACH
-    printf $1 > ${CACH}/${PLAT}
-  fi
   if [ -s ${CACH}/${PLAT} ]
   then
     if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
     then
       BILD=true
-      printf $1 > ${CACH}/${PLAT}
     fi
-  else
-    printf $1 > ${CACH}/${PLAT}
   fi
 }
+
+function update_cache {
+  if [ ! -d $CACH ]
+  then
+    mkdir $CACH
+  fi
+  printf $1 > ${CACH}/${PLAT}
+}
+
+cleanup
 
 curl $MROR -o $TFIL
 KRNS=(`cat $TFIL | gsed -nr 's|.*(kernel-[-.0-9]+\.el6\.x86_64\.rpm).*|\1|pg' \
@@ -61,6 +68,7 @@ then
   packer build -var "_version_=$VER" template.json
   if [ $? -eq 0 ]
   then
+    update_cache ${KRNS[0]}
     MESS="I have released an update to #centos 7 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"

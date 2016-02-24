@@ -17,7 +17,7 @@ set -o nounset
 source ~/.bashrc
 
 FVER="10.2"
-MROR="https://svn.freebsd.org/base/releng/$FVER/UPDATING"
+MROR="https://svn.freebsd.org/base/releng/$FVER"
 PLAT="freebsd10"
 TFIL="/tmp/`basename $0`.$$"
 CACH=~/Library/Caches/`basename $0`
@@ -49,6 +49,8 @@ function check_cache {
   fi
 }
 
+cd ~/repo/packer/$PLAT
+
 if [ ! -d $FVER ]
 then
   svn checkout $MROR $FVER --depth empty
@@ -57,7 +59,7 @@ fi
 cd $FVER
 svn up UPDATING
 
-VERS="`curl $MROR | awk '$1~/^[0-9]{8}$/{print$2}' UPDATING | head -n1`"
+VERS="`awk '$1~/^[0-9]{8}$/{print$2}' UPDATING | head -n1`"
 
 check_cache $VERS
 
