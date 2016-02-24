@@ -1,0 +1,73 @@
+#!/usr/bin/env sh
+
+# This script simply watches for an updated kernel. If an update is found, it
+# will then kick off a packer build of the related operating system.
+#
+# Requires: GNU Sed, svn 1.5+, Ruby gem t
+#
+# Tested on: Mac OS X ElCapitan
+#
+# Author: Justin Cook 
+
+set -x
+set -o errexit
+set -o nounset
+
+FVER="10.2"
+MROR="https://svn.freebsd.org/base/releng/$FVER/UPDATING"
+PLAT="freebsd10"
+TFIL="/tmp/`basename $0`.$$"
+CACH=~/Library/Caches/`basename $0`
+
+function cleanup {
+  rm -f $TFIL
+}
+
+trap cleanup INT TERM EXIT
+
+declare BILD=false
+
+# Only build if the last known exists and does not match the current latest.
+function check_cache {
+  if [ ! -d $CACH ]
+  then
+    mkdir $CACH
+    printf $1 > ${CACH}/${PLAT}
+  fi
+  if [ -s ${CACH}/${PLAT} ]
+  then
+    if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
+    then
+      BILD=true
+      printf $1 > ${CACH}/${PLAT}
+    fi
+  else
+    printf $1 > ${CACH}/${PLAT}
+  fi
+}
+
+if [ ! -d $FVER ]
+then
+  svn checkout $MROR $FVER --depth empty
+fi
+
+cd $FVER
+svn up UPDATING
+
+VERS="`curl $MROR | awk '$1~/^[0-9]{8}$/{print$2}' UPDATING | head -n1`"
+
+check_cache $VERS
+
+if [ "$BILD" = true ]
+then
+  cd ~/repo/packer/${PLAT}
+  VER="$FVER.RELEASE.$VERS"
+  packer build -var "_version_=$VER" template.json
+  if [ $? -eq 0 ]
+  then
+    MESS="I have released an update to @freebsd 10 @vagrantup box"
+    MESS="$MESS with @virtualbox provider"
+    MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
+    t update "$MESS $MURL"
+  fi
+fi
