@@ -16,38 +16,45 @@ set -o nounset
 # cron does not parse profile and runtime files, so look in personal dir
 source ~/.bashrc
 
+# User editable variables
 FVER="10.2"
 MROR="https://svn.freebsd.org/base/releng/$FVER"
 PLAT="freebsd10"
 TFIL="/tmp/`basename $0`.$$"
 CACH=~/Library/Caches/`basename $0`
 
+# The cleanup function ran at the beginning and end of exectution
 function cleanup {
+  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso
+  rm -f ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box
   rm -f $TFIL
 }
 
 trap cleanup INT TERM EXIT
 
+# Builds will be false by default unless it specifically meets requirements
 declare BILD=false
 
 # Only build if the last known exists and does not match the current latest.
 function check_cache {
-  if [ ! -d $CACH ]
-  then
-    mkdir $CACH
-    printf $1 > ${CACH}/${PLAT}
-  fi
   if [ -s ${CACH}/${PLAT} ]
   then
     if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
     then
       BILD=true
-      printf $1 > ${CACH}/${PLAT}
     fi
-  else
-    printf $1 > ${CACH}/${PLAT}
   fi
 }
+
+function update_cache {
+  if [ ! -d $CACH ]
+  then
+    mkdir $CACH
+  fi
+  printf $1 > ${CACH}/${PLAT}
+}
+
+cleanup
 
 cd ~/repo/packer/$PLAT
 
@@ -70,6 +77,7 @@ then
   packer build -var "_version_=$VER" template.json
   if [ $? -eq 0 ]
   then
+    update_cache $VERS
     MESS="I have released an update to @freebsd 10 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"

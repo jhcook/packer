@@ -25,7 +25,7 @@ CACH=~/Library/Caches/`basename $0`
 # The cleanup function ran at the begining and end of exectution
 function cleanup {
   rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso
-  rm -f ~/repo/packer/${PLAT}/fedora23-virtualbox.box
+  rm -f ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box
   rm -f $TFIL
 }
 
