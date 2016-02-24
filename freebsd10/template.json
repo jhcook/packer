@@ -25,6 +25,16 @@
           "output": "freebsd10-virtualbox.box"
         }
       }
+    },
+    {
+      "type": "atlas",
+      "artifact": "jhcook/freebsd10",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+        "provider": "virtualbox",
+        "version": "{{user `_version_`}}",
+        "description": "Latest patchest and Virtualbox guest additions for FreeBSD 10 RELEASE"
+      }
     }
   ],
   "builders": [
