@@ -3,7 +3,7 @@
 # This script simply watches for an updated kernel. If an update is found, it
 # will then kick off a packer build of the related operating system.
 #
-# Requires: GNU Sed
+# Requires: GNU Sed, Ruby gem t
 #
 # Tested on: Mac OS X ElCapitan
 #
@@ -12,6 +12,9 @@
 set -x
 set -o errexit
 set -o nounset
+
+# cron does not parse profile and runtime files, so look in personal dir
+source ~/.bashrc
 
 MROR="http://mirror.bytemark.co.uk/centos/7/updates/x86_64/Packages/"
 PLAT="centos7"

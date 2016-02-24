@@ -13,6 +13,9 @@ set -x
 set -o errexit
 set -o nounset
 
+# cron does not parse profile and runtime files, so look in personal dir
+source ~/.bashrc
+
 MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/23/x86_64/k/"
 PLAT="fedora23"
 TFIL="/tmp/`basename $0`.$$"

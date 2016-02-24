@@ -13,6 +13,9 @@ set -x
 set -o errexit
 set -o nounset
 
+# cron does not parse profile and runtime files, so look in personal dir
+source ~/.bashrc
+
 FVER="10.2"
 MROR="https://svn.freebsd.org/base/releng/$FVER/UPDATING"
 PLAT="freebsd10"
