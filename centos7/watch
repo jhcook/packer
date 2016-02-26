@@ -19,6 +19,7 @@ source ~/.bashrc
 # User editable variables
 MROR="http://mirror.bytemark.co.uk/centos/7/updates/x86_64/Packages/"
 PLAT="centos7"
+GSED="/usr/local/bin/gsed"
 TFIL="/tmp/`basename $0`.$$"
 CACH=~/Library/Caches/`basename $0`
 
@@ -57,7 +58,7 @@ function update_cache {
 cleanup
 
 curl $MROR -o $TFIL
-KRNS=(`cat $TFIL | gsed -nr 's|.*(kernel-[-.0-9]+\.el7\.x86_64\.rpm).*|\1|pg' \
+KRNS=(`cat $TFIL | $GSED -nr 's|.*(kernel-[-.0-9]+\.el7\.x86_64\.rpm).*|\1|pg' \
       | sort -rnt. -k4,5`)
 
 check_cache ${KRNS[0]}
@@ -65,7 +66,7 @@ check_cache ${KRNS[0]}
 if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
-  VER="`printf ${KRNS[0]} | gsed -r 's|kernel-(.*)\.el7.*|\1|g' | tr '-' '.'`"
+  VER="`printf ${KRNS[0]} | $GSED -r 's|kernel-(.*)\.el7.*|\1|g' | tr '-' '.'`"
   packer build -var "_version_=$VER" template.json
   if [ $? -eq 0 ]
   then
