@@ -25,9 +25,10 @@ CACH=~/Library/Caches/`basename $0`
 
 # The cleanup function ran at the beginning and end of exectution
 function cleanup {
-  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso
-  rm -f ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box
-  rm -f $TFIL
+  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
+  mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
+     ~/Dropbox/VirtualMachines/${PLAT}/ || /usr/bin/true
+  rm -f $TFIL || /usr/bin/true
 }
 
 trap cleanup INT TERM EXIT
