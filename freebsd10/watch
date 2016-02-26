@@ -3,7 +3,7 @@
 # This script simply watches for an updated kernel. If an update is found, it
 # will then kick off a packer build of the related operating system.
 #
-# Requires: GNU Sed, svn 1.5+, Ruby gem t
+# Requires: svn 1.5 and Ruby gem t
 #
 # Tested on: Mac OS X ElCapitan
 #
