@@ -20,6 +20,8 @@ source ~/.bashrc
 MROR="http://mirror.bytemark.co.uk/centos/7/updates/x86_64/Packages/"
 PLAT="centos7"
 GSED="/usr/local/bin/gsed"
+TBIN="/usr/local/bin/t"
+PBIN="/usr/local/bin/packer"
 TFIL="/tmp/`basename $0`.$$"
 CACH=~/Library/Caches/`basename $0`
 
@@ -67,13 +69,13 @@ if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
   VER="`printf ${KRNS[0]} | $GSED -r 's|kernel-(.*)\.el7.*|\1|g' | tr '-' '.'`"
-  packer build -var "_version_=$VER" template.json
+  $PBIN build -var "_version_=$VER" template.json
   if [ $? -eq 0 ]
   then
     update_cache ${KRNS[0]}
     MESS="I have released an update to #centos 7 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
-    t update "$MESS $MURL"
+    $TBIN update "$MESS $MURL"
   fi
 fi

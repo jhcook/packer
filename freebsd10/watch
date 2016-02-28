@@ -17,6 +17,8 @@ set -o nounset
 source ~/.bashrc
 
 # User editable variables
+TBIN="/usr/local/bin/t"
+PBIN="/usr/local/bin/packer"
 FVER="10.2"
 MROR="https://svn.freebsd.org/base/releng/$FVER"
 PLAT="freebsd10"
@@ -75,13 +77,13 @@ if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
   VER="$FVER.RELEASE.$VERS"
-  packer build -var "_version_=$VER" template.json
+  $PBIN build -var "_version_=$VER" template.json
   if [ $? -eq 0 ]
   then
     update_cache $VERS
     MESS="I have released an update to @freebsd 10 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
-    t update "$MESS $MURL"
+    $TBIN update "$MESS $MURL"
   fi
 fi

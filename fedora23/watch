@@ -20,6 +20,8 @@ source ~/.bashrc
 MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/23/x86_64/k/"
 PLAT="fedora23"
 GSED="/usr/local/bin/gsed"
+TBIN="/usr/local/bin/t"
+PBIN="/usr/local/bin/packer"
 TFIL="/tmp/`basename $0`.$$"
 CACH=~/Library/Caches/`basename $0`
 
@@ -67,13 +69,13 @@ if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
   VERS="`date +%Y.%m.%d.%H%M`"
-  packer build -var "_version_=$VERS" template.json
+  $PBIN build -var "_version_=$VERS" template.json
   if [ $? -eq 0 ]
   then
     update_cache ${KRNS[0]}
     MESS="I have released an update to @fedora 23 workstation @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/fedora23/versions/$VERS"
-    t update "$MESS $MURL"
+    $TBIN update "$MESS $MURL"
   fi
 fi
