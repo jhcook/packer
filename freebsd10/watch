@@ -3,7 +3,7 @@
 # This script simply watches for an updated kernel. If an update is found, it
 # will then kick off a packer build of the related operating system.
 #
-# Requires: GNU Sed, svn 1.5+, Ruby gem t
+# Requires: svn 1.5 and Ruby gem t
 #
 # Tested on: Mac OS X ElCapitan
 #
@@ -17,6 +17,8 @@ set -o nounset
 source ~/.bashrc
 
 # User editable variables
+TBIN="/usr/local/bin/t"
+PBIN="/usr/local/bin/packer"
 FVER="10.2"
 MROR="https://svn.freebsd.org/base/releng/$FVER"
 PLAT="freebsd10"
@@ -26,21 +28,14 @@ PFIL="/tmp/`basename $0`-${PLAT}.lock"
 
 # The cleanup function ran at the beginning and end of exectution
 function cleanup {
-  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso
-  rm -f ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box
-  rm -f $TFIL
-  rm -f $PFIL
+  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
+  mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
+     ~/Dropbox/VirtualMachines/${PLAT}/ || /usr/bin/true
+  rm -f $TFIL || /usr/bin/true
+  rm -f $PFIL || /usr/bin/true
 }
 
 trap cleanup INT TERM EXIT
-
-# Check to see if already running since this is a long process
-if [ -f "$PFIL" ]
-then
-  pgrep -F $PFIL bash >/dev/null && exit 1 || printf $$ > $PFIL
-else
-  printf $$ > $PFIL
-fi
 
 # Builds will be false by default unless it specifically meets requirements
 declare BILD=false
@@ -66,6 +61,14 @@ function update_cache {
 
 cleanup
 
+# Check to see if already running since this is a long process
+if [ -f "$PFIL" ]
+then
+  pgrep -F $PFIL bash >/dev/null && exit 1 || printf $$ > $PFIL
+else
+  printf $$ > $PFIL
+fi
+
 cd ~/repo/packer/$PLAT
 
 if [ ! -d $FVER ]
@@ -84,13 +87,13 @@ if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
   VER="$FVER.RELEASE.$VERS"
-  packer build -var "_version_=$VER" template.json
+  $PBIN build -var "_version_=$VER" template.json
   if [ $? -eq 0 ]
   then
     update_cache $VERS
     MESS="I have released an update to @freebsd 10 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
-    t update "$MESS $MURL"
+    $TBIN update "$MESS $MURL"
   fi
 fi
