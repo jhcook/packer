@@ -21,15 +21,25 @@ MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/23/x86_64/k/"
 PLAT="fedora23"
 TFIL="/tmp/`basename $0`.$$"
 CACH=~/Library/Caches/`basename $0`
+PFIL="/tmp/`basename $0`-${PLAT}.lock"
 
 # The cleanup function ran at the begining and end of exectution
 function cleanup {
   rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso
   rm -f ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box
   rm -f $TFIL
+  rm -f $PFIL
 }
 
 trap cleanup INT TERM EXIT
+
+# Check to see if already running since this is a long process
+if [ -f "$PFIL" ]
+then
+  pgrep -F $PFIL bash >/dev/null && exit 1 || printf $$ > $PFIL
+else
+  printf $$ > $PFIL
+fi
 
 # Builds will be false by default unless it specifically meets requirements
 declare BILD=false
