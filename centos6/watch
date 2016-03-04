@@ -32,7 +32,6 @@ function cleanup {
   mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
      ~/Dropbox/VirtualMachines/${PLAT}/ || /usr/bin/true
   rm -f $TFIL || /usr/bin/true
-  rm -f $PFIL || /usr/bin/true
 }
 
 trap cleanup INT TERM EXIT
@@ -59,8 +58,6 @@ function update_cache {
   printf $1 > ${CACH}/${PLAT}
 }
 
-cleanup
-
 # Check to see if already running since this is a long process
 if [ -f "$PFIL" ]
 then
@@ -68,6 +65,8 @@ then
 else
   printf $$ > $PFIL
 fi
+
+cleanup
 
 curl $MROR -o $TFIL
 KRNS=(`cat $TFIL | $GSED -nr 's|.*(kernel-[-.0-9]+\.el6\.x86_64\.rpm).*|\1|pg' \
