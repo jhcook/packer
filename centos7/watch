@@ -61,7 +61,7 @@ function update_cache {
 # Check to see if already running since this is a long process
 if [ -f "$PFIL" ]
 then
-  pgrep -F $PFIL bash >/dev/null && exit 1 || printf $$ > $PFIL
+  pgrep -F $PFIL sh >/dev/null && exit 1 || printf $$ > $PFIL
 else
   printf $$ > $PFIL
 fi
