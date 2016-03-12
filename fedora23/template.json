@@ -32,7 +32,7 @@
       "metadata": {
         "provider": "virtualbox",
         "version": "{{user `_version_`}}",
-        "description": "Daily build of Fedora 23 Workstation"
+        "description": "Kernel update build of Fedora 23 Workstation"
       }
     }
   ],
