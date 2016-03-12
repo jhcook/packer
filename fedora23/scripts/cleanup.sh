@@ -1,7 +1,7 @@
 # Restore original fedora-updates.repo
 /usr/bin/rm -f /etc/yum.repos.d/fedora-updates.repo
-/usr/bin/cp /tmp/fedora-updates.repo /etc/yum.repos.d/
-/usr/bin/rm -f /tmp/fedora-updates.repo
+/usr/bin/mv /etc/yum.repos.d/fedora-updates.repo.orig \
+  /etc/yum.repos.d/fedora-updates.repo
 
 # Delete VBoxAdditions iso, associated Ruby gems and clean dnf cache
 /usr/bin/rm -fr VBoxGuestAdditions_*.iso
