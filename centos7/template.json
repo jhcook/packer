@@ -27,7 +27,7 @@
     },
     {
       "type": "atlas",
-      "artifact": "jhcook/centos7
+      "artifact": "jhcook/centos7",
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
