@@ -28,7 +28,6 @@ PFIL="/tmp/`basename $0`-${PLAT}.lock"
 
 # The cleanup function ran at the begining and end of exectution
 function cleanup {
-  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
   rm -f $TFIL || /usr/bin/true
 }
 
@@ -87,4 +86,5 @@ then
   fi
   mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
      ~/Dropbox/VirtualMachines/${PLAT}/
+  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
 fi

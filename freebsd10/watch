@@ -28,9 +28,6 @@ PFIL="/tmp/`basename $0`-${PLAT}.lock"
 
 # The cleanup function ran at the beginning and end of exectution
 function cleanup {
-  rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
-  mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
-     ~/Dropbox/VirtualMachines/${PLAT}/ || /usr/bin/true
   rm -f $TFIL || /usr/bin/true
 }
 
@@ -93,6 +90,9 @@ then
     MESS="I have released an update to @freebsd 10 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
+    rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
+    mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
+       ~/Dropbox/VirtualMachines/${PLAT}/ || /usr/bin/true
     $TBIN update "$MESS $MURL"
   fi
 fi
