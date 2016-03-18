@@ -1,6 +1,13 @@
 #!/bin/sh
 # https://wiki.freebsd.org/VirtualBox
 
+# Sort out the toolchain
+cd /usr/src
+svnlite co https://svn.freebsd.org/base/releng/10.2 /usr/src
+make toolchain
+make build32 install32; ldconfig -v -m -R /usr/lib32
+rm -fr /usr/src/*
+
 # Install Virtualbox guest additions (use pkg so no build dependencies)
 #pkg install -y virtualbox-ose-additions
 cd /usr/ports/emulators/virtualbox-ose-additions
