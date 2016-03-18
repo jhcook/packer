@@ -17,7 +17,7 @@
     }
   ],
   "post-processors": [
-    {
+    [{
       "type": "vagrant",
       "vagrantfile_template": "Vagrantfile",
       "override": {
@@ -35,7 +35,7 @@
         "version": "{{user `_version_`}}",
         "description": "Latest patchset and Virtualbox guest additions for FreeBSD 10 RELEASE"
       }
-    }
+    }]
   ],
   "builders": [
     {
