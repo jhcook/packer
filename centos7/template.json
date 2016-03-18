@@ -17,7 +17,7 @@
     }
   ],
   "post-processors": [
-    {
+    [{
       "type": "vagrant",
       "override": {
         "virtualbox": {
@@ -34,7 +34,7 @@
         "version": "{{user `_version_`}}",
         "description": "Latest kernel build of CentOS 7"
       }
-    }
+    }]
   ],
   "builders": [
     {
