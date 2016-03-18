@@ -5,7 +5,7 @@ echo -e 'hostname="freebsd10-vbox"' >> /etc/rc.conf
 #/bin/dd if=/dev/zero of=/swapfile bs=4096 count=131072
 #/bin/chmod 600 /swapfile
 #echo -e 'swapfile="/swapfile"' >> /etc/rc.conf
-#/sbin/mdconfig -a -t vnode -f /usr/swap1 -u 0 && /sbin/swapon /dev/md0
+#/sbin/mdconfig -a -t vnode -f /swapfile -u 0 && /sbin/swapon /dev/md0
 
 # Update ports
 mkdir -p /usr/ports
