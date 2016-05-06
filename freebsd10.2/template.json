@@ -28,12 +28,12 @@
     },
     {
       "type": "atlas",
-      "artifact": "jhcook/freebsd10",
+      "artifact": "jhcook/freebsd10.2",
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
         "version": "{{user `_version_`}}",
-        "description": "Latest patchset for FreeBSD 10 RELEASE"
+        "description": "Latest patchset for FreeBSD 10.2-RELEASE"
       }
     }]
   ],

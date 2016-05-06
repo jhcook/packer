@@ -22,7 +22,7 @@
       "vagrantfile_template": "Vagrantfile",
       "override": {
         "virtualbox": {
-          "output": "freebsd10-virtualbox.box"
+          "output": "freebsd10.3-virtualbox.box"
         }
       }
     },
@@ -33,7 +33,7 @@
       "metadata": {
         "provider": "virtualbox",
         "version": "{{user `_version_`}}",
-        "description": "Latest patchset for FreeBSD 10.3 RELEASE"
+        "description": "Latest patchset for FreeBSD 10.3-RELEASE"
       }
     }]
   ],
