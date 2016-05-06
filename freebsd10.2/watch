@@ -1,0 +1,98 @@
+#!/usr/bin/env sh
+
+# This script simply watches for an updated kernel. If an update is found, it
+# will then kick off a packer build of the related operating system.
+#
+# Requires: svn 1.5 and Ruby gem t
+#
+# Tested on: Mac OS X ElCapitan
+#
+# Author: Justin Cook 
+
+set -x
+set -o errexit
+set -o nounset
+
+# cron does not parse profile and runtime files, so look in personal dir
+source ~/.bashrc
+
+# User editable variables
+TBIN="/usr/local/bin/t"
+PBIN="/usr/local/bin/packer"
+FVER="10.2"
+MROR="https://svn.freebsd.org/base/releng/$FVER"
+PLAT="freebsd10.2"
+TFIL="/tmp/`basename $0`.$$"
+CACH=~/Library/Caches/`basename $0`
+PFIL="/tmp/`basename $0`-${PLAT}.lock"
+
+# The cleanup function ran at the beginning and end of exectution
+function cleanup {
+  rm -f $TFIL || /usr/bin/true
+}
+
+trap cleanup INT TERM EXIT
+
+# Builds will be false by default unless it specifically meets requirements
+declare BILD=false
+
+# Only build if the last known exists and does not match the current latest.
+function check_cache {
+  if [ -s ${CACH}/${PLAT} ]
+  then
+    if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
+    then
+      BILD=true
+    fi
+  fi
+}
+
+function update_cache {
+  if [ ! -d $CACH ]
+  then
+    mkdir $CACH
+  fi
+  printf $1 > ${CACH}/${PLAT}
+}
+
+# Check to see if already running since this is a long process
+if [ -f "$PFIL" ]
+then
+  pgrep -F $PFIL sh >/dev/null && exit 1 || printf $$ > $PFIL
+else
+  printf $$ > $PFIL
+fi
+
+cleanup
+
+cd ~/repo/packer/$PLAT
+
+if [ ! -d $FVER ]
+then
+  svn checkout $MROR $FVER --depth empty
+fi
+
+cd $FVER
+svn up UPDATING
+
+VERS="`awk '$1~/^[0-9]{8}$/{print$2}' UPDATING | head -n1`"
+
+check_cache $VERS
+
+if [ "$BILD" = true ]
+then
+  cd ~/repo/packer/${PLAT}
+  VER="$FVER.RELEASE.$VERS"
+  $PBIN build -var "_version_=$VER" template.json
+  if [ $? -eq 0 ]
+  then
+    update_cache $VERS
+    MESS="I have released an update to @freebsd 10 @vagrantup box"
+    MESS="$MESS with @virtualbox provider"
+    MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
+    rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
+    mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
+       ~/Dropbox/VirtualMachines/${PLAT}/ || /usr/bin/true
+    $TBIN update "$MESS $MURL"
+  fi
+fi
