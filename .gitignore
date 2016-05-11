@@ -1,4 +1,5 @@
 */packer_cache
 */output-virtualbox-iso
 */*.box
-freebsd10/10.2
+freebsd10.2/10.2
+freebsd10.3/10.3
