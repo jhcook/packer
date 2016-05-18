@@ -9,6 +9,9 @@
 #
 # Author: Justin Cook 
 
+# Output a header for redirection to logs
+echo "\n***** `date +'%Y%m%d%H%M'` *****\n"
+
 set -x
 set -o errexit
 set -o nounset
