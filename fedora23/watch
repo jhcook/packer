@@ -77,7 +77,7 @@ check_cache ${KRNS[0]}
 if [ "$BILD" = true ]
 then
   cd ~/repo/packer/${PLAT}
-  VERS="`date +%Y.%m.%d.%H%M`"
+  VERS="`printf ${KRNS[0]} | $GSED -r 's|kernel-(.*)\.fc23.*|\1|g' | tr '-' '.'`"
   $PBIN build -var "_version_=$VERS" template.json
   if [ $? -eq 0 ]
   then
