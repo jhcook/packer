@@ -90,7 +90,7 @@ then
   if [ $? -eq 0 ]
   then
     update_cache $VERS
-    MESS="I have released an update to @freebsd 10 @vagrantup box"
+    MESS="I have released an update to @freebsd $FVER @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
     rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
