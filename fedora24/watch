@@ -20,8 +20,8 @@ set -o nounset
 source ~/.bashrc
 
 # User editable variables
-#MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/24/x86_64/k/"
-MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/testing/24/x86_64/k/"
+MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/24/x86_64/k/"
+#MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/testing/24/x86_64/k/"
 PLAT="fedora24"
 GSED="/usr/local/bin/gsed"
 TBIN="/usr/local/bin/t"
@@ -83,7 +83,7 @@ then
   if [ $? -eq 0 ]
   then
     update_cache ${KRNS[0]}
-    MESS="I have released an update to @fedora 24 workstation beta @vagrantup box"
+    MESS="I have released an update to @fedora 24 workstation @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://atlas.hashicorp.com/jhcook/boxes/fedora24/versions/$VERS"
     $TBIN update "$MESS $MURL"
