@@ -22,6 +22,13 @@ Keyboard is set to 'GB' and language en_GB.UTF-8.
 
 Timezone is set to Europe/London.
 
+## Create
+
+In order to create a box, issue the following command with the correct information:
+```
+export ISO_LOCATION=`pwd` ; packer build -var "_version_=3.10.0.327.28.3" template.json
+```
+
 ## Console
 ```
 $ vagrant ssh
