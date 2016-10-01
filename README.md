@@ -22,33 +22,36 @@ installation will fail.
 
 ## CentOS6
 The CentOS6 Vagrant box is a minimal CentOS6 installation with Virtualbox
-Guest Additions 5.0.14 or the latest version of Virtualbox available at the 
+Guest Additions 5.0.x or the latest version of Virtualbox available at the 
 time of build. 
 
 ## CentOS7
 The CentOS7 Vagrant box is a minimal CentOS7 installation with Virtualbox
-Guest Additions 5.0.14 or the latest version of Virtualbox available at the
+Guest Additions 5.0.x or the latest version of Virtualbox available at the
 time of build.
 
 ## Fedora23
 The Fedora23 Vagrant box is a Fedora Workstation installation with Virtualbox
-Guest Additions 5.0.14 or the latest version of Virtualbox avaiable at the
-time of build
+Guest Additions 5.0.x or the latest version of Virtualbox avaiable at the
+time of build.
 
 ## Fedora24
 The Fedora24 Vagrant box is a Fedora Workstation installation with Virtualbox
-Guest Additions 5.0.14 or the latest version of Virtualbox avaiable at the
-time of build
+Guest Additions 5.0.x or the latest version of Virtualbox avaiable at the
+time of build.
 
 ## FreeBSD 10.2
-The FreeBSD 10.2 Vagrant box is a minimal FreeBSD installation with Virtualbox
-Guest Additions available in the ports at the time of build.
+The FreeBSD 10.2 Vagrant box is a minimal FreeBSD installation without Virtualbox
+Guest Additions.
 
 ## FreeBSD 10.3
-The FreeBSD 10.3 Vagrant box is a minimal FreeBSD installation with Virtualbox
-Guest Additions available in the ports at the time of build.
+The FreeBSD 10.3 Vagrant box is a minimal FreeBSD installation without Virtualbox
+Guest Additions.
 
 ## FreeBSD 11.0
-The FreeBSD 11.0 Vagrant box is a minimal FreeBSD installation with Virtualbox
-Guest Additions available in the ports at the time of build.
+The FreeBSD 11.0 Vagrant box is a minimal FreeBSD installation without Virtualbox
+Guest Additions.
 
+## RHEL7
+The RHEL7 Vagrant box is a minimal RHEL7 installation with Virtualbox Guest
+Additions 5.0.x available at the time of build.
