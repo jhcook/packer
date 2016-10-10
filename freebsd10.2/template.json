@@ -22,7 +22,7 @@
       "vagrantfile_template": "Vagrantfile",
       "override": {
         "virtualbox": {
-          "output": "freebsd10.3-virtualbox.box"
+          "output": "freebsd10.2-virtualbox.box"
         }
       }
     },
