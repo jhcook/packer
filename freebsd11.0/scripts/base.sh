@@ -1,5 +1,5 @@
 # Set the hostname
-echo -e 'hostname="freebsd10-vbox"' >> /etc/rc.conf
+echo -e 'hostname="freebsd11-vbox"' >> /etc/rc.conf
 
 # Create a 512 MiB swap file
 #/bin/dd if=/dev/zero of=/swapfile bs=4096 count=131072
