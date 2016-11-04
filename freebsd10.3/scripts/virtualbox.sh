@@ -3,7 +3,7 @@
 
 # Sort out the toolchain
 #cd /usr/src
-#svnlite co https://svn.freebsd.org/base/releng/10.2 /usr/src
+#svnlite co https://svn.freebsd.org/base/releng/10.3 /usr/src
 #make toolchain
 
 # Build and install 32-bit dependencies
