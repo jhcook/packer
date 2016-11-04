@@ -44,6 +44,7 @@
         "<esc><wait>",
         "boot -s<enter>",
         "<wait5><wait><wait>",
+        "<wait5><wait><wait>",
         "/bin/sh<enter>",
         "mdmfs -s 512m md1 /tmp<enter>",
         "mdmfs -s 512m md2 /mnt<enter>",
