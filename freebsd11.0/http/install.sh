@@ -22,6 +22,20 @@ sshd_enable="YES"
 dumpdev="NO"
 EOF
 
+# Update ports
+mkdir -p /usr/ports
+cd /usr/ports
+/usr/sbin/portsnap --interactive fetch extract
+
+# No idea why this is needed but sometimes `make install` fails for pkg
+rm /var/run/ld-elf*.so.hints
+/etc/rc.d/ldconfig start
+
+# Install pkg
+cd /usr/ports/ports-mgmt/pkg
+make ; make install clean
+cd $OLDPWD
+
 env ASSUME_ALWAYS_YES=1 pkg bootstrap
 pkg update
 pkg install -y portmaster
