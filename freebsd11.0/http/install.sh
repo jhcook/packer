@@ -26,6 +26,7 @@ EOF
 mkdir -p /usr/ports
 cd /usr/ports
 /usr/sbin/portsnap --interactive fetch extract
+cd $OLDPWD
 
 # No idea why this is needed but sometimes `make install` fails for pkg
 rm /var/run/ld-elf*.so.hints
