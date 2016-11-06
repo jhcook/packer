@@ -1,8 +1,7 @@
 # FreeBSD 10.3
 
 This is a Vagrant box running the latest version of FreeBSD 10.3-RELEASE
-patchset and all updates including the Kernel. The Virtualbox Guest
-Additions 4.3.x -- or the latest version of Virtualbox is supported. 
+patchset and all updates including the Kernel.
 
 ## Info
 

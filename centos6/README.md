@@ -2,7 +2,7 @@
 
 This is a Vagrant box running the latest version of CentOS6 available with 
 all updates including the Kernel release. The Virtualbox Guest Additions 
-5.0.x -- or the latest version of Virtualbox is supported. 
+5.1.x -- or the latest version of Virtualbox is supported. 
 
 ## Info
 

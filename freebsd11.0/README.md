@@ -1,8 +1,7 @@
 # FreeBSD 11.0
 
 This is a Vagrant box running the latest version of FreeBSD 11.0-RELEASE
-patchset and all updates including the Kernel. The Virtualbox Guest
-Additions 5.0 -- or the latest version of Virtualbox is supported. 
+patchset and all updates including the Kernel.
 
 ## Info
 

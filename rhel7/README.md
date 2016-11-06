@@ -2,7 +2,7 @@
 
 This is a Vagrant box running the latest version of RHEL7 available with 
 all updates including the Kernel release in minimal configuration. The 
-latest Virtualbox Guest Additions 5.0.x is installed. 
+latest Virtualbox Guest Additions 5.1.x is installed. 
 
 ## Info
 
