@@ -20,8 +20,8 @@ set -o nounset
 source ~/.bashrc
 
 # User editable variables
-#MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/25/x86_64/k/"
-MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/testing/25/x86_64/k/"
+MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/25/x86_64/k/"
+#MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/testing/25/x86_64/k/"
 PLAT="fedora25"
 GSED="/usr/local/bin/gsed"
 TBIN="/usr/local/bin/t"
