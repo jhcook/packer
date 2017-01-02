@@ -28,7 +28,7 @@
     },
     {
       "type": "atlas",
-      "artifact": "jhcook/freebsd11.0",
+      "artifact": "jhcook/freebsd-11.0",
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
