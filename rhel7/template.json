@@ -1,6 +1,6 @@
 {
   "variables": {
-    "iso_url": "{{env `ISO_LOCATION`}}/rhel-server-7.2-x86_64-dvd.iso"
+    "iso_url": "{{env `ISO_LOCATION`}}/rhel-server-7.3-x86_64-dvd.iso"
   },
   "provisioners": [
     {
@@ -39,7 +39,7 @@
       "disk_size": 40520,
       "guest_os_type": "RedHat_64",
       "http_directory": "http",
-      "iso_checksum": "03f3a0291634335f6995534d829bd21ffaa0d000004dfeb1b2fb81052d64a4d5",
+      "iso_checksum": "120acbca7b3d55465eb9f8ef53ad7365f2997d42d4f83d7cc285bf5c71e1131f",
       "iso_checksum_type": "sha256",
       "iso_url": "{{user `iso_url`}}",
       "disk_size": 51200,
