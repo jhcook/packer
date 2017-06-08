@@ -2,5 +2,5 @@
 */output-virtualbox-iso
 */*.box
 freebsd10.2/10.2
-freebsd10.3/10.3
-freebsd11.0/11.0
+freebsd-10.3/10.3
+freebsd-11.0/11.0
