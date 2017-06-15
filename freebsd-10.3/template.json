@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "vagrantcloud_token": "{{ env `VAGRANTCLOUD_TOKEN`}}"
+  },
   "provisioners": [
     {
       "type": "shell",
@@ -27,14 +30,11 @@
       }
     },
     {
-      "type": "atlas",
-      "artifact": "jhcook/freebsd-10.3",
-      "artifact_type": "vagrant.box",
-      "metadata": {
-        "provider": "virtualbox",
-        "version": "{{user `_version_`}}",
-        "description": "Latest patchset for FreeBSD 10.3-RELEASE"
-      }
+      "type": "vagrant-cloud",
+      "box_tag": "jhcook/freebsd-10.3",
+      "version": "{{user `_version_`}}",
+      "version_description": "Latest patchset for FreeBSD 10.3-RELEASE",
+      "access_token": "{{user `vagrantcloud_token`}}"
     }]
   ],
   "builders": [

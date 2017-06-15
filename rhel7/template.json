@@ -1,6 +1,7 @@
 {
   "variables": {
-    "iso_url": "{{env `ISO_LOCATION`}}/rhel-server-7.3-x86_64-dvd.iso"
+    "iso_url": "{{env `ISO_LOCATION`}}/rhel-server-7.3-x86_64-dvd.iso",
+    "vagrantcloud_token": "{{ env `VAGRANTCLOUD_TOKEN`}}"
   },
   "provisioners": [
     {
@@ -27,6 +28,13 @@
           "output": "rhel7-virtualbox.box"
         }
       }
+    },
+    {
+      "type": "vagrant-cloud",
+      "box_tag": "secnix/rhel7",
+      "version": "{{user `_version_`}}",
+      "version_description": "Latest kernel release of Red Hat Enterprise Linux 7",
+      "access_token": "{{user `vagrantcloud_token`}}"
     }]
   ],
   "builders": [

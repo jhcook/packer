@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "vagrantcloud_token": "{{ env `VAGRANTCLOUD_TOKEN`}}"
+  },
   "provisioners": [
     {
       "type": "shell",
@@ -26,14 +29,11 @@
       }
     },
     {
-      "type": "atlas",
-      "artifact": "jhcook/fedora24",
-      "artifact_type": "vagrant.box",
-      "metadata": {
-        "provider": "virtualbox",
-        "version": "{{user `_version_`}}",
-        "description": "Kernel update build of Fedora 24 Workstation"
-      }
+      "type": "vagrant-cloud",
+      "box_tag": "jhcook/fedora24",
+      "version": "{{user `_version_`}}",
+      "version_description": "Kernel update build of Fedora 24 Workstation",
+      "access_token": "{{user `vagrantcloud_token`}}"
     }]
   ],
   "builders": [

@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "vagrantcloud_token": "{{ env `VAGRANTCLOUD_TOKEN`}}"
+  },
   "provisioners": [
     {
       "type": "shell",
@@ -26,14 +29,11 @@
       }
     },
     {
-      "type": "atlas",
-      "artifact": "jhcook/centos7",
-      "artifact_type": "vagrant.box",
-      "metadata": {
-        "provider": "virtualbox",
-        "version": "{{user `_version_`}}",
-        "description": "Latest kernel build of CentOS 7"
-      }
+      "type": "vagrant-cloud",
+      "box_tag": "jhcook/centos7",
+      "version": "{{user `_version_`}}",
+      "version_description": "Latest kernel build of CentOS 7",
+      "access_token": "{{user `vagrantcloud_token`}}"
     }]
   ],
   "builders": [
