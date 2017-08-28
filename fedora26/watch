@@ -21,7 +21,7 @@ source ~/.bashrc
 
 # User editable variables
 #MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/26/x86_64/k/"
-MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/testing/26/x86_64/k/"
+MROR="http://mirror.bytemark.co.uk/fedora/linux/updates/26/x86_64/k/"
 PLAT="fedora26"
 GSED="/usr/local/bin/gsed"
 TBIN="/usr/local/bin/t"
