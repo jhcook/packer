@@ -1,0 +1,75 @@
+{
+  "variables": {
+    "vagrantcloud_token": "{{ env `VAGRANTCLOUD_TOKEN`}}"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
+      "override": {
+        "virtualbox-iso": {
+          "scripts": [
+            "scripts/base.sh",
+            "scripts/vagrant.sh",
+            "scripts/virtualbox.sh",
+            "scripts/cleanup.sh",
+            "scripts/zerodisk.sh"
+          ]
+        }
+      }
+    }
+  ],
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "vagrantfile_template": "Vagrantfile",
+      "override": {
+        "virtualbox": {
+          "output": "freebsd11.1-virtualbox.box"
+        }
+      }
+    },
+    {
+      "type": "vagrant-cloud",
+      "box_tag": "jhcook/freebsd-11.1",
+      "version": "{{user `_version_`}}",
+      "version_description": "Latest patchset for FreeBSD 11.1-RELEASE",
+      "access_token": "{{user `vagrantcloud_token`}}"
+    }]
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<esc><wait>",
+        "boot -s<enter>",
+        "<wait5><wait><wait>",
+        "<wait5><wait><wait>",
+        "/bin/sh<enter>",
+        "mdmfs -s 512m md1 /tmp<enter>",
+        "mdmfs -s 512m md2 /mnt<enter>",
+        "dhclient -l /tmp/dhclient.lease.em0 em0<enter><wait5>",
+        "fetch -o /tmp/setup http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh<enter><wait><wait>",
+        "bsdinstall script /tmp/setup<enter>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 40520,
+      "guest_os_type": "FreeBSD_64",
+      "http_directory": "http",
+      "iso_checksum": "ab1539894e74aef77c1c4729fbd2362fc3bd30b71f24db68e1b0307723b72752",
+      "iso_checksum_type": "sha256",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/11.1/FreeBSD-11.1-RELEASE-amd64-bootonly.iso",
+      "disk_size": 51200,
+      "headless": true,
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'shutdown -p now' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "4096" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "4" ]
+      ]
+    }
+  ]
+}
