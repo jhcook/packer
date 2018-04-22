@@ -30,9 +30,9 @@
     },
     {
       "type": "vagrant-cloud",
-      "box_tag": "jhcook/centos7",
+      "box_tag": "jhcook/centos7-docker",
       "version": "{{user `_version_`}}",
-      "version_description": "Latest kernel build of CentOS 7",
+      "version_description": "Latest kernel build of CentOS 7 with docker-latest and OverlayFS 2",
       "access_token": "{{user `vagrantcloud_token`}}"
     }]
   ],

@@ -21,7 +21,7 @@ source ~/.bashrc
 
 # User editable variables
 MROR="http://mirror.bytemark.co.uk/centos/7/updates/x86_64/Packages/"
-PLAT="centos7"
+PLAT="centos7-docker"
 GSED="/usr/local/bin/gsed"
 TBIN="/usr/local/bin/t"
 PBIN="/usr/local/bin/packer"
@@ -82,7 +82,7 @@ then
   if [ $? -eq 0 ]
   then
     update_cache ${KRNS[0]}
-    MESS="I have released an update to #centos 7 @vagrantup box"
+    MESS="I have released an update to #centos @Docker 7 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
     MURL="https://app.vagrantup.com/jhcook/boxes/${PLAT}/versions/$VER"
     $TBIN update "$MESS $MURL"
