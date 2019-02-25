@@ -84,7 +84,7 @@ then
     update_cache ${KRNS[0]}
     MESS="I have released an update to #centos 6 @vagrantup box"
     MESS="$MESS with @virtualbox provider"
-    MURL="https://atlas.hashicorp.com/jhcook/boxes/${PLAT}/versions/$VER"
+    MURL="https://app.vagrantup.com/jhcook/boxes/${PLAT}/versions/$VER"
     $TBIN update "$MESS $MURL"
   fi
   mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
