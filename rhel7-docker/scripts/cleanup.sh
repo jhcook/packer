@@ -10,3 +10,7 @@ yum -y clean all
 subscription-manager remove --all
 subscription-manager unregister
 subscription-manager clean
+
+# Remove files that contain suprfluous information
+rm -f /root/anaconda-ks.cfg
+rm -f /root/original-ks.cfg
