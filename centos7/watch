@@ -41,12 +41,13 @@ declare BILD=false
 
 # Only build if the last known exists and does not match the current latest.
 function check_cache {
-  if [ -s ${CACH}/${PLAT} ]
+  if [ ! -s ${CACH}/${PLAT} ]
   then
-    if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
-    then
-      BILD=true
-    fi
+    mkdir -p ${CACH} && touch ${CACH}/${PLAT}
+  fi
+  if [ "`cat ${CACH}/${PLAT}`" != "$1" ]
+  then
+    BILD=true
   fi
 }
 
@@ -68,7 +69,7 @@ fi
 
 cleanup
 
-curl $MROR -o $TFIL
+curl --silent $MROR -o $TFIL
 KRNS=(`cat $TFIL | $GSED -nr 's|.*(kernel-[-.0-9]+\.el7\.x86_64\.rpm).*|\1|pg' \
       | sort -rnt. -k4,5`)
 
@@ -88,6 +89,6 @@ then
     $TBIN update "$MESS $MURL"
   fi
   mv ~/repo/packer/${PLAT}/${PLAT}-virtualbox.box \
-    ~/Dropbox/VirtualMachines/${PLAT}/
+    /Volumes/G-DRIVE/justin.cook/Dropbox\ \(Personal\)/VirtualMachines/${PLAT}/
   rm -fr ~/repo/packer/${PLAT}/output-virtualbox-iso || /usr/bin/true
 fi
